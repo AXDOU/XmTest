@@ -51,14 +51,14 @@ namespace XmTest.Basic.Util
         /// <summary>
         /// 单次换行/多次换行
         /// </summary>
-        public static string Rn<T>(this T data,int num=0)
+        public static string Rn<T>(this T data, int num = 0)
         {
-            if(data!=null)
+            if (data != null)
             {
-                if (num>1)
+                if (num > 1)
                 {
                     string str = string.Empty;
-                    for (int i = 0; i < num;i++ )
+                    for (int i = 0; i < num; i++)
                     {
                         str += "\r\n";
                     }
@@ -66,7 +66,7 @@ namespace XmTest.Basic.Util
                 }
                 return data.ToString() + "\r\n";
             }
-            return "\r\n";;
+            return "\r\n"; ;
         }
         /// <summary>
         /// 截取指定字符串之间的字符串
@@ -86,12 +86,27 @@ namespace XmTest.Basic.Util
                     return string.Empty;
                 return str.Substring(IndexofA + str1.Length, Index);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
             return string.Empty;
         }
+
+        /// <summary>
+        /// 省略指定长度的字符扩展,默认加...
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="ellipsislength"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string ToEllipsisString(this string str, int ellipsislength = 20, string format = "...")
+        {
+            if (str.IsNullOrEmpty()) return str;
+            if (str.Length < ellipsislength) return str;
+            else
+                return $"{str.Substring(0, ellipsislength)}{format}";
+        }
     }
- 
+
 }

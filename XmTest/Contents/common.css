@@ -1,16 +1,17 @@
 ﻿
 /*四分钟网页布局*/
-body {
+/*微软雅黑，"Microsoft yahei", "Hiragino Sans GB", "冬青黑体简体中文 w3", STXihei, 华文细黑, SimSun, 宋体, Heiti, 黑体, sans-serif;*/
+/*body {
     margin: 0 auto;
     max-width: 65em;
-    font-family: Arial; /*微软雅黑，"Microsoft yahei", "Hiragino Sans GB", "冬青黑体简体中文 w3", STXihei, 华文细黑, SimSun, 宋体, Heiti, 黑体, sans-serif;*/
+    font-family: Arial; 
     line-height: 1.75;
     padding: 2.5em 1em;
     color: #555;
     font-size: 13px;
     height: 100%;
-    /*color:#566b78;*/
-}
+}*/
+/*color:#566b78;*/
 
 li {
     list-style: none;
@@ -92,15 +93,20 @@ header {
         }
 /*块级div*/
 .block {
-    display: inline-block;
+    display: inline-flex;
     width: 100%;
     margin: 5px 0 5px 0;
 }
 
 .block_left {
-    display: inline-block;
+    display: inline;
     width: 40%;
 }
+
+    .block_left > label {
+        line-height: 1.5em;
+        vertical-align: top;
+    }
 
 .block_right {
     display: inline-block;
@@ -185,10 +191,3 @@ a:link, a:visited, a:hover, a:active {
 .white {
     background-color: #fff;
 }
-
-
-
-
-
-
-

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>@ViewBag.Title</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -10,8 +10,9 @@
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     @*<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>*@
     <script src="~/Contents/js/jquery-3.3.1.min.js"></script>
-    <script src="~/Contents/js/framework.ui.js"></script>
     <script src="~/Contents/js/jquery.form.js"></script>
+    <script src="~/Contents/js/jsframework.ui.js"></script>
+
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -42,62 +43,65 @@
     </style>
 </head>
 <body>
-    <div class="aq_home">
-        <div id="#wrap" class="aq_container">
-            <div class="aq_nav">
+    <div id="aq_home">
+        <!--头部 top-->
+        <div id="aq_header">
+            <div id="aq_theico">
                 <img src="/Contents/images/logo/axq3.png" />
                 <label>
                     @(string.IsNullOrWhiteSpace(ViewBag.user) ? "夏秋" : ViewBag.user)的博客
                 </label>
+               
             </div>
-           
-            <!--头部 top-->
-            <div class="aq_top">
-                <ul style="font-size:small;">
+            <div  id="aq_nav">
+                <ul id="aq_navui">
                     <li><a href="/Home/Index">首页</a></li>
                     <li><a href="/Blog/Blog/BlogCenter">手札</a></li>
                     <li><a href="/Diary/Diary/Index">日记</a></li>
-                    <li><a href="/Diary/Setting/BlogSetting/">管理</a></li>
+                    <li><a href="/Setting/BlogSetting/Index">管理</a></li>
                     <li><a href="/Category/Category/Index">分类</a></li>
                     @*<li><a href="/Product/Product/Index">关于</a></li>*@
                 </ul>
             </div>
+        </div>
+        <div id="aq_main" class="aq_main">
             <!--头部 end-->
             <!--主体 main-->
-            <section class="aq_main" id="aq_main">
+            <section  id="aq_mainContainer" class="animate_fainin">
                 @RenderBody()
             </section>
-            @*<div class="aq_main" id="aq_main">
-
-                </div>*@
             <!--主体-->
+            <section id="sidebar">
+                @Html.Partial("partial1")
+            </section>
+            <div id="clear"></div>
         </div>
-        <div class="aq_pendant">
+        <div id="aq_pendant">
             @*@{
-                    var random = new Random();
-                    var num = random.Next(0, 2);
-                }
+                var random = new Random();
+                var num = random.Next(0, 2);
+            }
 
-                @if (string.IsNullOrWhiteSpace(ViewBag.user))
+            @if (string.IsNullOrWhiteSpace(ViewBag.user))
+            {
+                if (num > 0)
                 {
-                    if (num > 0)
-                    {
-                        <strong><a href="/Login/Index" va="@num">登录</a></strong>
-                    }
-                    else
-                    {
-                        <strong><a href="/Login/Index2" va="@num">登录</a></strong>
-                    }
-                    <strong>
-                        |  <a>注册</a>
-                    </strong>
+                    <strong><a href="/Login/Index" va="@num">登录</a></strong>
                 }
                 else
                 {
-                    <strong>
-                        @ViewBag.user,欢迎你！|<a href="/Login/Loginout">注销</a>
-                    </strong>
-                }*@
+                    <strong><a href="/Login/Index2" va="@num">登录</a></strong>
+                }
+                <strong>
+                    |  <a>注册</a>
+                </strong>
+            }
+            else
+            {
+                <strong>
+                    @ViewBag.user,欢迎你！|<a href="/Login/Loginout">注销</a>
+                </strong>
+            }*@
             <table id="datetimepicker"></table>
         </div>
     </div>
@@ -110,7 +114,7 @@
     </div>
     <!-----右下插件 end----->
     <!--底部 footer-->
-    <div id="footer" class="bottom">
+    <div id="footer">
         <!--左下蒲公英-->
         <div class="dandelion" title="管理">
             <a href="/Blog/Blog/BlogCenter">

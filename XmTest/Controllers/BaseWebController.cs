@@ -9,11 +9,15 @@ using XmTest.Basic.Util;
 using XmTest.Basic.Web;
 using XmTest.IRepository.sysBasic;
 using XmTest.Repository.sysBasic;
+using XmTest.Basic.Helpers;
+
 namespace XmTest.Controllers
 {
     public class BaseWebController : Controller
     {
         public static int loginId { get; set; }
+        private static string _successMsg = "保存成功";
+        private static string _errorMsg = "保存失败";
 
         #region[        调用服务对象    ]
         public IX_UserRepository userService = new X_UserRepository();
@@ -25,7 +29,7 @@ namespace XmTest.Controllers
         public ICommentRepository commentService = new CommentRepository();
 
         public IX_AlbumRepository albumService = new X_AlbumRepository();
-        public IX_AlbumTypeRepository  albumTypeService= new X_AlbumTypeRepository();
+        public IX_AlbumTypeRepository albumTypeService = new X_AlbumTypeRepository();
 
         public IX_DiaryRepository diaryService = new X_DiaryRepository();
         #endregion
@@ -37,6 +41,28 @@ namespace XmTest.Controllers
             loginId = GetLoginId();
             ViewBag.user = GetLoginName();
         }
+
+
+        public T Visit<T>(Func<T> func)
+        {
+            string url = System.Web.HttpContext.Current.Request.RawUrl.ToString();
+            try
+            {
+                LogHelper.Write(null, func.Target.ToString());
+                return func.Invoke();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex, $"URL:{url}{ex.Message}", EnumHepler.LogLevel.Error);
+                Type type = typeof(T);
+                if (!type.IsAbstract)
+                    return Activator.CreateInstance<T>();
+
+                Response.Redirect("/Home/Error");
+                return default(T);
+            }
+        }
+
 
         /// <summary>
         /// 获取用户名
@@ -75,6 +101,16 @@ namespace XmTest.Controllers
             return iuser;
         }
 
+        public virtual ActionResult AutoResult(bool isSuccess)
+        {
+            return isSuccess ? Success() : Error();
+        }
+
+        protected virtual ActionResult Success()
+        {
+            return Content(new AjaxResult { state = ResultType.success.ToString(), msg = _successMsg }.ToJson());
+        }
+
         protected virtual ActionResult Success(string msg)
         {
             return Content(new AjaxResult { state = ResultType.success.ToString(), msg = msg }.ToJson());
@@ -83,6 +119,11 @@ namespace XmTest.Controllers
         protected virtual ActionResult Success(string msg, object data)
         {
             return Content(new AjaxResult { state = ResultType.success.ToString(), msg = msg, data = data }.ToJson());
+        }
+
+        protected virtual ActionResult Error()
+        {
+            return Content(new AjaxResult { state = ResultType.error.ToString(), msg = _errorMsg }.ToJson());
         }
 
         protected virtual ActionResult Error(string msg)

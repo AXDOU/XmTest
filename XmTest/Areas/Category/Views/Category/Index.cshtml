@@ -50,7 +50,7 @@
     @*<div class="category">
         <a href="">文学<label>(0)</label> </a>
     </div>*@
-    @foreach (var item in ViewBag.cfList as List<XmTest.Basic.ViewModel.ClassifyMode>)
+    @foreach (var item in ViewBag.cfList as List<XmTest.Basic.DTO.Output.ClassifyManage.ClassifyMode>)
     {
     <div class="category"> <a href="/Category/Category/CategoryDetail?category=@item.Name">@item.Name<span>(@item.Count)</span></a>  </div>
     }

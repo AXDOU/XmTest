@@ -7,6 +7,9 @@ using XmTest.Data.Entity;
 using XmTest.Service.Basic;
 using XmTest.Basic.Web;
 using XmTest.Basic.Helpers;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
 namespace XmTest.Controllers
 {
     public class HomeController : BaseWebController
@@ -14,21 +17,17 @@ namespace XmTest.Controllers
         //
         // GET: /Home/
 
+
         public ActionResult Index(Page page)
         {
-
-            List<Notes> notes = new List<Notes>();
-            try
+            return base.Visit(() =>
             {
-                notes = NotesService.Instance.GetNotes(page);
+                NotesService notesService = new NotesService();
+                notesService.TestInvokeEvent();
+                NotesService.Instance.TestInvokeEvent();
+                var notes = NotesService.Instance.GetNotes(page);
                 return View(notes);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex, "/Home/");
-                return View(notes);
-            }
-
+            });
         }
         /// <summary>
         /// 导航栏测试页
@@ -43,6 +42,7 @@ namespace XmTest.Controllers
         {
             return View();
         }
+
 
         /// <summary>
         /// 404错误页

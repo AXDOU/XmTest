@@ -52,6 +52,7 @@
     <Compile Include="Basic\CommentService.cs" />
     <Compile Include="Basic\DiaryService.cs" />
     <Compile Include="Basic\NotesService.cs" />
+    <Compile Include="Event\ClassifyEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

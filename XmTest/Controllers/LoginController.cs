@@ -18,15 +18,15 @@ namespace XmTest.Controllers
     [AllowAnonymous]//允许跳过登录验证
     public class LoginController : LoginBaseController
     {
-        private string userLifeCycle = System.Configuration.ConfigurationManager.AppSettings["CurrentUserCache_LifeCycle"];
+        private readonly string userLifeCycle = System.Configuration.ConfigurationManager.AppSettings["CurrentUserCache_LifeCycle"];
         public IX_UserRepository useService = new X_UserRepository();
         // GET: /Login/
 
-       
+
 
         public ActionResult Index()
         {
-            
+           
             var cookie = Request.Cookies[WebContent.UserCookie];
             if (cookie != null)
             {
@@ -76,8 +76,7 @@ namespace XmTest.Controllers
             string name = obj["name"].ToString();
             string pwd = obj["password"].ToString();
             string msg = string.Empty;
-            int loginId;
-            if (LoginValidate(name, pwd, out msg, out loginId))
+            if (LoginValidate(name, pwd, out msg, out int loginId))
             {
                 string token = "";
                 token = name + "_" + Guid.NewGuid().ToString().Substring(4, 12) + DateTime.Now.Millisecond;  //将用户登录信息保存在cache中，用于单点登录
@@ -85,12 +84,12 @@ namespace XmTest.Controllers
                 CacheHelper.Insert(token, name, Convert.ToInt32(userLifeCycle));//单点登录SSO服务器端cache添加
                 string redirecturl = "http://localhost:2979/Home/Index";
                 CreateCookie(token, loginId, name, redirecturl);
-                return Json(new { code = 1, msg = msg });
+                return Json(new { code = 1, msg });
             }
             else
             {
                 ViewBag.user = "";
-                return Json(new { code = -1, msg = msg });
+                return Json(new { code = -1, msg });
             }
         }
 
@@ -154,5 +153,10 @@ namespace XmTest.Controllers
             //TODO:将用户相关的信息返回
             return obj.ToString();
         }
+
+
+
     }
+
+   
 }

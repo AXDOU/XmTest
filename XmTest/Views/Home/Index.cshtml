@@ -3,6 +3,9 @@
     ViewBag.Title = "首页";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
+<section class="animate_fainin">
+
+</section>
 @if (Model != null && Model.Count > 0)
 {
     foreach (var item in Model)
@@ -12,7 +15,7 @@
             <h5 class="align_rg">——千千阙歌，照亮我的心灵！</h5>
             <div class="note_Content">
                 @(new HtmlString(item.Content))
-                <a href="/Category/Category/Detail?NoteID=@item.Id">加载更多..</a>
+                <a href="/Category/Category/Detail?NoteID=@item.Id" uiactions="collapse">加载更多..</a>
             </div>
             <div>
                 <div class="align_rg">

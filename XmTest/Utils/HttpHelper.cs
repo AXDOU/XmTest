@@ -45,7 +45,7 @@ namespace XmTest.Utils
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
 
         }
@@ -83,9 +83,9 @@ namespace XmTest.Utils
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -116,7 +116,7 @@ namespace XmTest.Utils
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
 
         }
@@ -164,9 +164,9 @@ namespace XmTest.Utils
                 }
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
         public static T PostDataWtihModel<T>(string WCFservicesName, string functionName, object obj)
@@ -211,9 +211,9 @@ namespace XmTest.Utils
                 }
                 return JsonConvert.DeserializeObject<T>(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
 
         }
@@ -284,9 +284,9 @@ namespace XmTest.Utils
                 }
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -294,11 +294,15 @@ namespace XmTest.Utils
         public static T PPostModel<T>(string ServeName, string FUNC, string content) where T : class
         {
             var tid = System.Web.HttpContext.Current.Request.Cookies[WebContent.UserCookie].Value;
-            NameValueCollection NameValueCollections = new NameValueCollection();
-            NameValueCollections.Add("content", content);
+            NameValueCollection NameValueCollections = new NameValueCollection
+            {
+                { "content", content }
+            };
 
-            WebHeaderCollection Headers = new WebHeaderCollection();
-            Headers.Add("tID", tid);
+            WebHeaderCollection Headers = new WebHeaderCollection
+            {
+                { "tID", tid }
+            };
             var str_Object = new JavaScriptSerializer().Deserialize<T>(Encoding.UTF8.GetString(new WebClient() { Headers = Headers }.UploadValues(wcfURL + "/" + ServeName + "/" + FUNC, "POST", NameValueCollections)));
             return str_Object;
         }
@@ -314,8 +318,10 @@ namespace XmTest.Utils
         {
             var tid = System.Web.HttpContext.Current.Request.Cookies[WebContent.UserCookie].Value;
             NameValueCollection NameValueCollections = new NameValueCollection();
-            WebHeaderCollection Headers = new WebHeaderCollection();
-            Headers.Add("tID", tid);
+            WebHeaderCollection Headers = new WebHeaderCollection
+            {
+                { "tID", tid }
+            };
             var str_Object = new JavaScriptSerializer().Deserialize<T>(Encoding.UTF8.GetString(new WebClient() { Headers = Headers }.UploadValues(wcfURL + "/" + ServeName + "/" + FUNC, "POST", NameValueCollections)));
             return str_Object;
         }
@@ -337,9 +343,11 @@ namespace XmTest.Utils
             var userInfo = System.Web.HttpContext.Current.Session[WebContent.UserSession] as UserLoginModel;
 
             NameValueCollection NameValueCollections = new NameValueCollection();
-            WebHeaderCollection Headers = new WebHeaderCollection();
-            Headers.Add("tID", tid);
-            Headers.Add("uID", userInfo == null ? "" : userInfo.LoginId.ToString());
+            WebHeaderCollection Headers = new WebHeaderCollection
+            {
+                { "tID", tid },
+                { "uID", userInfo == null ? "" : userInfo.LoginId.ToString() }
+            };
 
             var str_Object = new JavaScriptSerializer().Deserialize<List<T>>(Encoding.UTF8.GetString(new WebClient() { Headers = Headers }.UploadValues(wcfURL + "/" + ServeName + "/" + FUNC, "POST", NameValueCollections)));
             return str_Object;
@@ -348,10 +356,14 @@ namespace XmTest.Utils
         public static List<T> PostList_GUID<T>(string ServeName, string FUNC, Guid id) where T : class
         {
             var tid = System.Web.HttpContext.Current.Request.Cookies[WebContent.UserCookie].Value;
-            NameValueCollection NameValueCollections = new NameValueCollection();
-            NameValueCollections.Add("ID", id.ToString());
-            WebHeaderCollection Headers = new WebHeaderCollection();
-            Headers.Add("tID", tid);
+            NameValueCollection NameValueCollections = new NameValueCollection
+            {
+                { "ID", id.ToString() }
+            };
+            WebHeaderCollection Headers = new WebHeaderCollection
+            {
+                { "tID", tid }
+            };
 
             var str_Object = new JavaScriptSerializer().Deserialize<List<T>>(Encoding.UTF8.GetString(new WebClient() { Headers = Headers }.UploadValues(wcfURL + "/" + ServeName + "/" + FUNC, "POST", NameValueCollections)));
             return str_Object;
@@ -360,10 +372,14 @@ namespace XmTest.Utils
         public static T PostModel_GUID<T>(string ServeName, string FUNC, Guid id) where T : class
         {
             var tid = System.Web.HttpContext.Current.Request.Cookies[WebContent.UserCookie].Value;
-            NameValueCollection NameValueCollections = new NameValueCollection();
-            NameValueCollections.Add("ID", id.ToString());
-            WebHeaderCollection Headers = new WebHeaderCollection();
-            Headers.Add("tID", tid);
+            NameValueCollection NameValueCollections = new NameValueCollection
+            {
+                { "ID", id.ToString() }
+            };
+            WebHeaderCollection Headers = new WebHeaderCollection
+            {
+                { "tID", tid }
+            };
             var str_Object = new JavaScriptSerializer().Deserialize<T>(Encoding.UTF8.GetString(new WebClient() { Headers = Headers }.UploadValues(wcfURL + "/" + ServeName + "/" + FUNC, "POST", NameValueCollections)));
             return str_Object;
         }
@@ -520,9 +536,9 @@ namespace XmTest.Utils
 
                 return results;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 

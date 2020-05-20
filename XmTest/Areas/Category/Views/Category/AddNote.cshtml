@@ -7,7 +7,8 @@
 <script src="~/kindeditor/kindeditor-all-min.js"></script>
 <script src="~/kindeditor/lang/zh-CN.js"></script>
 <script src="~/kindeditor/plugins/code/prettify.js"></script>
-
+<script src="~/Contents/js/jquery-3.3.1.min.js"></script>
+<script src="~/Contents/js/jsframework.ui.js"></script>
 <script type="text/javascript">
     var editor1;
     KindEditor.ready(function (K) {
@@ -24,67 +25,72 @@
         var html = editor1.html();
         editor1.sync();
         var form_data = $('#example').serializeObject();
+        console.log(JSON.stringify(form_data));
         var params = {
-            url: "@Url.Action("AddNote", "Category")",
+            url: "/Category/Category/AddNoteN",
             data: { str: JSON.stringify(form_data) }
         }
         $.submitForm(params);
     }
 </script>
 @*<style>
-    input, select {
-        width: 200px;
-        height: 25px;
-        border-radius: 5px;
-        padding-left: 2px;
-        border: 1px solid #808080;
-    }
-
-    .btn_ok {
-        width: 60px;
-        background: #ffffff;
-        height: 25px;
-    }
-
-        .btn_ok:hover {
-            background: rgba(0, 0, 0, 0.46);
+        input, select {
+            width: 200px;
+            height: 25px;
+            border-radius: 5px;
+            padding-left: 2px;
+            border: 1px solid #808080;
         }
 
-    .Note_Container {
-        width: 100%;
-        height: auto;
-        margin: 15px 0 15px 0;
-        border: 0;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-    }
+        .btn_ok {
+            width: 60px;
+            background: #ffffff;
+            height: 25px;
+        }
 
-        .Note_Container h3 {
+            .btn_ok:hover {
+                background: rgba(0, 0, 0, 0.46);
+            }
+
+        .Note_Container {
+            width: 100%;
+            height: auto;
+            margin: 15px 0 15px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+            .Note_Container h3 {
+                text-align: left;
+            }
+
+        .Note_Content {
+            margin: 0 auto;
+        }
+
+        .Note_block {
+            padding: 14px 0 14px 0;
+        }
+
+        .Note_left {
+            width: 128px;
+            display: inline-block;
+            padding: 3px 25px 3px 25px;
+            margin-left: 55px;
             text-align: left;
         }
 
-    .Note_Content {
-        margin: 0 auto;
+        .Note_right {
+            display: inline-block;
+            padding: 3px 25px 3px 25px;
+        }
+    </style>*@
+<style>
+    .block_left {
+        width: 140px;
     }
-
-    .Note_block {
-        padding: 14px 0 14px 0;
-    }
-
-    .Note_left {
-        width: 128px;
-        display: inline-block;
-        padding: 3px 25px 3px 25px;
-        margin-left: 55px;
-        text-align: left;
-    }
-
-    .Note_right {
-        display: inline-block;
-        padding: 3px 25px 3px 25px;
-    }
-</style>*@
-
+</style>
 <div class="Note_Container">
     <form method="post" id="example" name="example">
         <h3>文本编辑</h3>
@@ -107,7 +113,7 @@
                 <div class="block_left"><label>详细内容:</label> </div>
                 <div class="block_right" style="vertical-align:top">
                     <!--设置元素顶端对齐：提示文字位于右上方-->
-                    <textarea id="Content" name="Content" cols="100" rows="8" style="width:800px;min-height:400px;visibility:hidden;"></textarea>
+                    <textarea id="Content" name="Content" cols="100" rows="8" style="min-height:400px;visibility:hidden;"></textarea>
                 </div>
             </div>
             <div class="block">

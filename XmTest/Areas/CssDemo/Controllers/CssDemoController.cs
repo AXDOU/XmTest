@@ -78,6 +78,12 @@ namespace XmTest.Areas.CssDemo.Controllers
         }
 
 
+        public ActionResult Live2d()
+        {
+            return View();
+        }
+
+
         /// <summary>
         /// 常用字符串格式化处理
         /// </summary>

@@ -7,13 +7,15 @@ using XmTest.Controllers;
 using XmTest.Models;
 using Newtonsoft.Json;
 using XmTest.Basic;
-using XmTest.Basic.ViewModel;
+using XmTest.Basic.DTO;
 using XmTest.IRepository.sysBasic;
 using XmTest.Repository.sysBasic;
 using XmTest.Basic.Util;
 using XmTest.Data.Entity;
 using XmTest.Utils;
 using XmTest.Service.Basic;
+using XmTest.Basic.DTO.Output.ClassifyManage;
+
 namespace XmTest.Areas.Category
 {
     public class CategoryController : BaseWebController
@@ -74,16 +76,14 @@ namespace XmTest.Areas.Category
         #endregion
 
         #region 分类方法
+        [ValidateInput(false)]
         [HttpPost]
-        public ActionResult AddNote(string str)
+        public ActionResult AddNoteN(string str)
         {
             if (str.IsNullOrEmpty())
                 return Json(new { code = 0, msg = "请完善数据后再提交！" });
             bool result = service.AddNote(str, loginId);
-            if (result)
-                return Success("保存成功");
-            else
-                return Error("保存失败");
+            return AutoResult(result);
         }
 
         /// <summary>
@@ -96,11 +96,7 @@ namespace XmTest.Areas.Category
         {
             if (str.IsNullOrEmpty())
                 return Json(new { code = 0, msg = "请完善数据后再提交！" });
-            bool result = service.EditNote(str, loginId);
-            if (result)
-                return Success("保存成功");
-            else
-                return Error("保存失败");
+            return AutoResult(service.EditNote(str, loginId));
         }
 
       

@@ -23,12 +23,24 @@ namespace XmTest.Data.Entity
         [StringLength(150)]
         public string iCon { get; set; }
 
+        /// <summary>
+        ///访问次数 
+        /// </summary>
         public int? Viewed { get; set; }
 
+        /// <summary>
+        /// 点赞数
+        /// </summary>
         public int? ThumbUpCount { get; set; }
 
+        /// <summary>
+        /// 点踩数
+        /// </summary>
         public int? DownCount { get; set; }
 
+        /// <summary>
+        /// 回复数
+        /// </summary>
         public int? ReplyCount { get; set; }
 
         [StringLength(150)]
