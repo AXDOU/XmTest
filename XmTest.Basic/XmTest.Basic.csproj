@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\Output\BlogIndex\BlogIndexPage.cs" />
     <Compile Include="Helpers\BaseHelpers.cs" />
     <Compile Include="Helpers\Common.cs" />
     <Compile Include="Helpers\EnumHepler.cs" />
@@ -54,16 +53,12 @@
     <Compile Include="Util\Json.cs" />
     <Compile Include="Util\OptGenerateHelper.cs" />
     <Compile Include="Util\StringHelper.cs" />
-    <Compile Include="DTO\Output\ClassifyManage\ClassifyMode.cs" />
-    <Compile Include="DTO\JsonTestModel.cs" />
-    <Compile Include="DTO\NoteMode.cs" />
+    <Compile Include="ViewModel\ClassifyMode.cs" />
+    <Compile Include="ViewModel\NoteMode.cs" />
     <Compile Include="Web\AjaxResult.cs" />
     <Compile Include="Web\Pagination.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO\Form\" />
-    <Folder Include="DTO\Input\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

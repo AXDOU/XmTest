@@ -2,21 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
-<style>
-    .iTop ul > li {
-        padding: 5px;
-        line-height: 28px;
-    }
-</style>
 <div class="iTop">
-    <ul>
-        <li><a href="/Category/Category/AddNote">编辑随笔</a></li>
-        <li><a href="/Category/Category/AddNote">添加随笔</a></li>
-
-        <li> <a href="/Category/Category/AddNote">添加分类</a></li>
-        <li> <a href="/Category/Category/AddNote">编辑分类</a></li>
-        <li> <a href="/Category/Category/AddNote">添加日记</a></li>
-        <li> <a href="/Category/Category/AddNote">编辑日记</a></li>
-    </ul>
+    <a href="@Url.Action("AddNote","Category")">添加随笔</a>
 </div>
 

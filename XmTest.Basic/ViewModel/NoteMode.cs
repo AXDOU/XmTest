@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace XmTest.Basic.DTO
+namespace XmTest.Basic.ViewModel
 {
     public  class NoteMode
     {

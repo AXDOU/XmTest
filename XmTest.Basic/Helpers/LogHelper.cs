@@ -44,9 +44,9 @@ namespace XmTest.Basic.Helpers
                 sw.WriteLine(string.Format("-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-{0}~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
                 sw.WriteLine("       title:" + title);
                 sw.WriteLine("       msg:");
-                sw.WriteLine("           " + ex?.ToString());
+                sw.WriteLine("           " + ex.ToString());
                 sw.WriteLine("-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~--~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~ end");
-               sw.Close();
+                sw.Close();
             }
         }
     }

@@ -10,8 +10,6 @@ using XmTest.Repository.sysBasic;
 using XmTest.Data.Factory;
 using XmTest.Basic.Util;
 using XmTest.Basic.Web;
-using XmTest.Service.Event;
-
 namespace XmTest.Service.Basic
 {
     public class NotesService
@@ -23,33 +21,31 @@ namespace XmTest.Service.Basic
                 return DALFactory<NotesService>.Instance;
             }
         }
+
         private INotesRepository noteService = new NotesRepository();
         private IX_ClassifyRepository classifyService = new X_ClassifyRepository();
-        private ClassifyEventService classifyEvent = new ClassifyEventService();
-        public NotesService()
-        {
-            classifyEvent.SubcribeEvent();
-        }
 
-        public void TestInvokeEvent()
-        {
-           bool isfailed =  classifyEvent.InvokeClassifyCountEvent(1);
-        }
-     
         public List<Notes> GetNotes(Page page)
         {
             page.sortcol = "Id";
             List<Notes> Notes = noteService.FindList(page);
-          
-            Notes.ForEach(x => x.Content.ToEllipsisString(100));
+            string str = string.Empty;
+            Notes.ForEach(x => x.Content = x.Content != null ? x.Content.Length > 100 ? x.Content.Substring(0, 99) + "..." : x.Content : "");
             return Notes;
         }
 
         public List<Notes> GetMyNotes(int userId)
         {
-            if (userId < 1 ) return new List<Notes>();
-            List<Notes> notes = noteService.GetList(x => x.UserID == userId);
-            return notes;
+            List<Notes> Notes = new List<Notes>();
+            if (userId > 0)
+            {
+                Notes = noteService.GetList(x => x.UserID == userId);
+                Notes.ForEach(x =>
+                {
+                    x.Content = x.Content.IsNotNullOrEmpty() && x.Content.Length > 100 ? x.Content.Substring(0, 99) : x.Content + "...";
+                });
+            }
+            return Notes;
         }
 
 
@@ -62,9 +58,11 @@ namespace XmTest.Service.Basic
         public List<Notes> GetclassifyDetail(string category, int userId)
         {
             X_Classify classify = classifyService.GetModel(x => x.Name == category.Trim() && x.UserID == userId);
-            if (classify == null) return null;
-
-            List<Notes> xcList = noteService.GetList(x => x.ClassifyID == classify.Id && x.UserID == userId && x.Content != null);
+            if (classify == null)
+                return null;
+            List<Notes> xcList = noteService.GetList(x => x.ClassifyID == classify.Id && x.UserID == userId);
+            xcList.RemoveAll(x => x.Content == null);
+            xcList.ForEach(x => x.Content = x.Content != null ? x.Content.Length > 100 ? x.Content.Substring(0, 99) + "..." : x.Content : "");
             return xcList;
         }
 
@@ -72,13 +70,10 @@ namespace XmTest.Service.Basic
         public Dictionary<string, string> GetClassifyfield(int userId)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-
-            List<X_Classify> xcList = classifyService.GetList(x => x.UserID == userId);
-
-            xcList.ForEach(x =>
-                            {
-                                dic.Add(x.Id.ToString(), x.Name);
-                            });
+            classifyService.GetList(x => x.UserID.Equals(userId)).ForEach(x =>
+           {
+               dic.Add(x.Id.ToString(), x.Name);
+           });
             return dic;
         }
 

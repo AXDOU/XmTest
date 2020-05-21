@@ -7,9 +7,8 @@ using XmTest.Data.Entity;
 using XmTest.Data.Repository;
 using XmTest.IRepository;
 using XmTest.IRepository.sysBasic;
-using XmTest.Basic.DTO;
+using XmTest.Basic.ViewModel;
 using XmTest.Basic.Util;
-
 namespace XmTest.Repository.sysBasic
 {
     public class X_ClassifyRepository : RepositoryBase<X_Classify>, IX_ClassifyRepository
@@ -17,7 +16,8 @@ namespace XmTest.Repository.sysBasic
         private INotesRepository noteService = new NotesRepository();
         public bool EditNote(string str, int userId)
         {
-            if (str.IsNullOrEmpty()) return false;
+            if (str.IsNullOrEmpty())
+                return false;
             NoteMode note = JsonConvert.DeserializeObject<NoteMode>(str);
             Notes notes = new Notes
             {
@@ -30,6 +30,7 @@ namespace XmTest.Repository.sysBasic
                 Viewed = 0,
                 ThumbUpCount = 0
             };
+
 
             X_Classify xc = this.GetModel(x => x.Id == note.ClassifyID);
             if (xc != null)
@@ -55,22 +56,12 @@ namespace XmTest.Repository.sysBasic
                 Viewed = 0,
                 ThumbUpCount = 0
             };
-            if (this.UpdateSingleClassifyCount(note.ClassifyID))
-               return noteService.Insert(notes);
-            return false;
-        }
-
-        /// <summary>
-        /// 更新单个Classify数量
-        /// </summary>
-        /// <param name="classifyId"></param>
-        /// <returns></returns>
-        public bool UpdateSingleClassifyCount(int classifyId)
-        {
-            X_Classify xc = this.GetModel(x => x.Id == classifyId);
+            X_Classify xc = this.GetModel(x => x.Id == note.ClassifyID);
             if (xc != null)
                 xc.Count += 1;
-            return this.Update(xc);
+            if (this.Update(xc))
+               return noteService.Insert(notes);
+            return false;
         }
     }
 }

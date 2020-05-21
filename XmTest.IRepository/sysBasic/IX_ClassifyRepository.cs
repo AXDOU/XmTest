@@ -10,6 +10,7 @@ namespace XmTest.IRepository.sysBasic
     {
         bool AddNote(string str, int userId);
         bool EditNote(string str, int userId);
-        bool UpdateSingleClassifyCount(int id);
+
+       
     }
 }
